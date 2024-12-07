@@ -30,10 +30,14 @@ class PythonDictionary(StenoDictionary):
         reverse_lookup = mod.get('reverse_lookup', lambda x: set())
         if not isinstance(reverse_lookup, typing.Callable):
             raise ValueError('invalid `reverse_lookup\' function: %s\n' % reverse_lookup)
+        items = mod.get('items', lambda: [])
+        if not isinstance(items, typing.Callable):
+            raise ValueError('invalid `items\' function: %s\n' % items)
         self._mod = mod
         self._lookup = lookup
         self._longest_key = longest_key
         self._reverse_lookup = reverse_lookup
+        self._items = items
 
     def __contains__(self, key):
         if len(key) > self._longest_key:
@@ -59,3 +63,10 @@ class PythonDictionary(StenoDictionary):
 
     def reverse_lookup(self, value):
         return set(self._reverse_lookup(value))
+
+    def items(self):
+        """
+        Allows converting the dictionary to JSON using Plover GUI.
+        See README.md for details.
+        """
+        return self._items()

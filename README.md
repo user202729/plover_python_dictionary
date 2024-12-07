@@ -21,6 +21,12 @@ def lookup(key):
 # to <text> (an empty array if not possible).
 def reverse_lookup(text):
     return []
+
+# Optional: return list[tuple[tuple[str, ...], str]]
+# If this is provided, you can convert the dictionary to JSON using
+# right click -> "Save dictionaries as..." feature in Plover GUI
+def items():
+    return [(("H-L",), "hello"), (("WORL",), "world")]
 ```
 
 For example save the following code to `show_stroke.py`:
